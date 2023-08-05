@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %} New-Post {% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Create a New Post</h2>
+  <p class="text-center">Share your latest design masterpiece with the Designer's Hub community. Fill in the required fields below and upload an image of your design. Let the world admire your creativity and talent!</p>
+  <div class="container form-div mt-4">
+    <form action="{% url 'post' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-6 mb-4">
+            <div>
+                {{ post_form.image | as_crispy_field }}
+            </div>
+            <div class="user-img mt-3 mb-3"  style="width: 100%; height: 100%;">
+                <img id="previewImage" src="#" alt="Image" style="display:none; width:90%; height: 90%; background-color: gray;">
+            </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-12">{{ post_form.title | as_crispy_field }}</div>
+            <div class="col-12">{{ post_form.category | as_crispy_field }}</div>
+            <div class="col-12">{{ post_form.description | as_crispy_field }}</div>
+          </div>
+          <br>
+          <div class="text-center">
+            <input type="submit" value="Submit" class="btn btn-primary mt-4">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+    document.getElementById('postImage').addEventListener('change', function (event) {
+        var input = event.target;
+
+        if(input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('previewImage').src = e.target.result;
+                document.getElementById('previewImage').style.display = 'block';
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    } );
+</script>
+{% endblock %}

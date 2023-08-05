@@ -1,0 +1,14 @@
+{
+    "build": [
+        {
+            "src": "designershub/wsgi.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "designershub/wsgi.py"
+        }
+    ]
+}

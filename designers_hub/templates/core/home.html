@@ -1,0 +1,71 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Home-page {% endblock title %}
+
+{% block extra_style %}
+<style>
+    .card-img-top {
+      height: 200px; /* Set a fixed height for the image container */
+      object-fit: cover; /* Maintain aspect ratio and fill the container */
+      object-position: center; /* Center the image within the container */
+      transition: transform 0.3s ease; /* Add a smooth transition effect */
+    }
+
+    .card:hover .card-img-top {
+      transform: scale(1.05); /* Apply a slight zoom-out on hover */
+    }
+
+</style>
+{% endblock extra_style %}
+
+{% block content %}
+<!-- Main Content -->
+<div class="container mt-4">
+  <div class="row">
+    {% if posts %}
+      {% for post in posts %}
+      <!-- Repeat this col for each image post -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card"> 
+          <a href="{% url 'view_post' id=post.id %}"><img src="{{ post.image.url }}" class="card-img-top img-fluid" alt="Design Image 1"></a>
+          <div class="card-body">
+              <h7 class="card-title mb-4">Uploaded by : {{ post.author.user.username }}</h7>
+              <h5 class="card-title">{{ post.title }}</h5>
+              <p class="card-text">{{ post.description }}</p>
+              <button class="btn btn-primary like-button" data-post-id="{{ post.id }}" data-csrf-token="{{ csrf_token }}">
+                  {{ post.likes }}
+                  <i class="far fa-thumbs-up"></i>
+              </button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+    <!-- End of col for each image post -->
+  </div>
+</div>
+
+
+<!-- Add MDBootstrap JS link here -->
+<script src="https://cdn.jsdelivr.net/npm/mdb@5.1.0/js/mdb.min.js"></script>
+<script>
+    $(document).on('click', '.like-button', function(event) {
+        //prevent the page from reloading
+        event.preventDefault();
+        var postId = $(this).data('post-id');
+        var csrfToken = $(this).data('csrf-token');
+        var url = 'like_post/' + postId + '/';
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: {'csrfmiddlewaretoken': csrfToken},
+            dataType: 'json',
+
+            success: function(response) {
+                $('.like-button[data-post-id=' + postId + ']').html(response.likes +' '+ '<i class="far fa-thumbs-up"></i>');
+            }
+        })
+    })
+</script>
+{% endblock content %}

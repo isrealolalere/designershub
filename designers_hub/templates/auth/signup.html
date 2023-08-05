@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}
+Signup
+{% endblock title %} 
+
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <h2 class="text-center mb-4">Join Designer's Hub!</h2>
+      <p class="text-center">Designer's Hub is a vibrant community of graphic designers. Create an account and showcase your creativity to the world. Connect with fellow artists, explore inspiring designs, and grow your skills in a supportive environment.</p>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-8 col-lg-6">
+      <form action="{% url 'signup' %}" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        <div class="mb-3">{{ form.user_img |as_crispy_field }}</div>
+        <div class="row mb-3">
+          <div class="col-6">{{ form.first_name |as_crispy_field }}</div>
+          <div class="col-6">{{ form.last_name |as_crispy_field }}</div>
+        </div>
+
+        <div class="mb-3">{{ form.username |as_crispy_field }}</div>
+        <div class="mb-3">{{ form.email |as_crispy_field }}</div>
+        <div class="mb-3">{{ form.password1 |as_crispy_field }}</div>
+        <div class="mb-3">{{ form.password2 |as_crispy_field }}</div>
+        <br>
+        <button class="btn btn-primary w-100" type="submit">Submit</button>
+        <p class="mt-3 text-center">Already have an account? <a href="{% url 'login' %}">Login now</a>.</p>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

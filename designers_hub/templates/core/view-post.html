@@ -1,0 +1,75 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %} Post {% endblock title %}
+
+{% block content %}
+<!-- Main Content -->
+<div class="container mt-4">
+  <div class="row">
+    <!-- Main Post Column -->
+    <div class="col-md-9">
+      <div class="card">
+        <img src="{{ post.image.url }}" class="card-img-top img-fluid" alt="Current Design Image">
+        <div class="card-body">
+          <h5 class="card-title">{{ post.title }}</h5>
+          <p class="card-text">{{ post.description }}</p>
+          <button type="button" class="btn btn-primary">{{ current_post.likes }} Like</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Side Section for Other Posts (Large Screens) -->
+    <div class="col-md-3 d-none d-md-block">
+      {% if all_user_post %}
+        <div class="list-group mt-3">
+          <h3 class="list-group-item list-group-item-action active">Other Designs by {{ post.author.user.username }}</h3>
+          {% for post in all_user_post %}
+            <a href="{% url 'view_post' id=post.id %}" class="list-group-item list-group-item-action">
+              <img src="{{ post.image.url }}" class="img-fluid" alt="Design Image">
+              <h5 class="mt-2 mb-0">{{ post.title }}</h5>
+              <small class="text-muted">{{ post.author.username }}</small>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+      <div class="list-group mt-3">
+        <h3 class="list-group-item list-group-item-action active">Other Designs by {{ post.author.user.username }}</h3>
+        No other posts by this user
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Side Section for Other Posts (Small Screens) -->
+    {% if all_user_post %}
+    <div class="d-md-none">
+        <h3 class="mt-4">Other Designs by {{ post.author.user.username }}</h3>
+        <div class="row row-cols-1 row-cols-md-3">
+            {% for post in all_user_post %}
+            <div class="col-4">
+                <div class="mb-4 mt-4">
+                    <div class="card">
+                        <a href="{% url 'view_post' id=post.id %}"><img src="{{ post.image.url }}" class="card-img-top img-fluid" alt="Design Image"></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <div class="d-md-none">
+      <h3 class="mt-4">Other Designs by {{ post.author.user.username }}</h3>
+      <div class="row row-cols-1 row-cols-md-3">
+        No other posts by this user
+      </div>
+    </div>
+    {% endif %}
+
+
+</div>
+
+</div>
+
+{% endblock content %}

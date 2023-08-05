@@ -1,0 +1,40 @@
+    <!-- User Section (Right-hand side) -->
+    <div class="col-lg-3 d-lg-block d-none">
+        <div class="card">
+          <img style="border-radius: 50%; width: 150px; height: 150px;" src="{{ user_info.user_img.url }}" class="card-img-top img-fluid" alt="Profile Image">
+          <div class="card-body">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' user=request.user.username %}"><i class="far fa-image"></i> My Posts</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'update_profile' %}"><i class="fas fa-user"></i> Update Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'post' %}"><i class="fas fa-plus"></i> Create New Post</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </div>
+  
+    <!-- Navigation Menu (Dropdown for Small Screens) -->
+    <div class="row d-lg-none mb-4">
+        <div class="col-12 mt-4">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
+                    Menu
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="text-align: left;">
+                    <img style="border-radius: 50%; width: 100px; height: 100px;" src="{{ user_info.user_img.url }}" class="card-img-top img-fluid mt-2 mb-2" alt="Profile Image">
+                    <li><a class="dropdown-item" href="{% url 'profile' user=request.user.username %}"><i class="far fa-image"></i> My Posts</a></li>
+                    <li><a class="dropdown-item" href="{% url 'update_profile' %}"><i class="fas fa-user"></i> Update Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'post' %}"><i class="fas fa-plus"></i> Create New Post</a></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>

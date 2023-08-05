@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">Designer's Hub</a>
+      <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <!-- Add your navigation links here -->
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'contact_us' %}"><i class="fas fa-envelope"></i> Contact Us</a>
+          </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'post' %}"><i class="fas fa-plus"></i> Upload Design</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'profile' user=request.user.username %}"><i class="fas fa-user"></i> Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'signup' %}"><i class="fas fa-user-plus"></i> Signup</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
+          </li>
+          {% endif %}
+
+          {% if show_search_bar %}
+            {% block search_bar %}
+            <li class="nav-item">
+              <form action="{% url 'home' %}" method="post">
+                  {% csrf_token %}
+                  <input type="text" name="query" placeholder="search with keywords" style="border-radius: 5px; margin-top: 4px; border-style:ridge; border-color:cadetblue">
+              </form>
+            </li>
+            {% endblock search_bar %}
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+</nav>
+

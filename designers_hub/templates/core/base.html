@@ -1,0 +1,118 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock title %}</title>
+
+    <link
+      href="{% static 'mdb5\css\mdb.dark.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'mdb5\css\mdb.dark.min.css.map' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'mdb5\css\mdb.dark.rtl.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'mdb5\css\mdb.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'mdb5\css\mdb.rtl.min.css' %}"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    {% block extra_style %}
+    {% endblock extra_style %}
+    <!--MDB JAVASCRIPT CODE-->
+    <script src="{% static 'mdb5\js\mdb.min.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<!-- Navbar -->
+{% include 'core/navbar.html' %}
+
+<!--alert message div-->
+{% if messages %}
+  {% for msg in messages %}
+      <div class="me-auto w-100 text-center" id="alert-container" style="border-radius: 10px; box-shadow: 0px 0px 3px grey;"></div>
+  {% endfor %}
+{% endif %}
+
+{% block content %}
+{% endblock content %}
+
+<!-- Footer Section -->
+<footer class="bg-dark text-white">
+  <div class="container py-4">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <h5>Contact Us</h5>
+        <ul class="list-unstyled">
+          <li>Email: isrealolalere09@gmail.com</li>
+          <li>Phone: +234 81 600 75 589</li>
+          <li>Address: University of Osun State, Okebale, Osogbo, Nigeria</li>
+        </ul>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h5>Follow Us</h5>
+        <ul class="list-unstyled">
+          <li><a href="https://www.facebook.com/ayodeji.olalere.96" class="text-white">Facebook</a></li>
+          <li><a href="https://github.com/isrealolalere" class="text-white">Github</a></li>
+          <li><a href="https://www.instagram.com/eazyartdesigns" class="text-white">Instagram</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5>Newsletter</h5>
+        <form action="{% url 'news_letter' %}" method="post" class="input-group">
+          {% csrf_token %}
+          <input type="email" name="newsemail" class="form-control" placeholder="Enter your email">
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="bg-primary text-center py-2">
+    <p class="mb-0">© 2023 Graphic Design Website. All rights reserved.</p>
+  </div>
+</footer>
+
+{% if messages %}
+{% for msg in messages %}
+<script>
+    // Get the alert message and type from Django template variables
+    var alertMessage = "{{ msg }}";
+
+    // Function to display the alert message
+    function showAlert(message) {
+        // Create a new div element for the alert
+        var alertDiv = document.createElement('div');
+        alertDiv.classList.add('alert', 'fade', 'show'); // Add CSS classes to style the alert
+        alertDiv.textContent = message; // Set the alert message text
+
+        // Find the container element where the alert will be displayed
+        var container = document.getElementById('alert-container');
+        container.appendChild(alertDiv); // Append the alert to the container
+
+        // Remove the alert after a specified duration (e.g., 5000 milliseconds = 5 seconds)
+        setTimeout(function() {
+          alertDiv.classList.remove('show'); // Remove the "show" class to fade out the alert
+          alertDiv.parentNode.removeChild(alertDiv); // Remove the alert element from the DOM
+        }, 4000);
+    }
+
+    // Call the showAlert function with the alert message and type
+    showAlert(alertMessage);
+</script>
+{% endfor %}
+{% endif %}
+
+</body>
+</html>

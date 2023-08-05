@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block title %} 
+Update Profile
+{% endblock title %} 
+
+{% block content %}
+<div class="container-fluid small-screen">
+</div>
+<div class="info" style="padding-top: 20px; padding-bottom: 20px;">
+    <div class="container mt-4 w-100">
+        <h2 class="text-center mb-4">Update Your Profile</h2>
+        <p class="text-center">Welcome back! Here, you can update your profile information to keep it up-to-date and showcase your latest designs. Make sure to fill in the required fields and click "Submit" to save your changes.</p>
+        <form action="{% url 'update_profile' %}" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            <div>{{ update_profile_form.profile_img | as_crispy_field }}</div>
+            <div class="row">
+                <div class="col-md-6">{{ update_profile_form.first_name | as_crispy_field }}</div>
+                <div class="col-md-6">{{ update_profile_form.last_name | as_crispy_field }}</div>
+            </div>
+            <div>{{ update_profile_form.username | as_crispy_field }}</div>
+            <div>{{ update_profile_form.email | as_crispy_field }}</div>
+            <br>
+            <div class="text-center">
+                <input type="submit" value="Submit" class="btn btn-primary mt-4">
+                <a href="{% url 'home' %}" class="btn btn-primary mt-4">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br><br>
+{% endblock content %}

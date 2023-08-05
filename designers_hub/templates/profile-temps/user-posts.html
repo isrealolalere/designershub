@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+
+{% block extra_style %}
+<style>
+    .card-img-top {
+      height: 200px; /* Set a fixed height for the image container */
+      object-fit: cover; /* Maintain aspect ratio and fill the container */
+      object-position: center; /* Center the image within the container */
+      transition: transform 0.3s ease; /* Add a smooth transition effect */
+    }
+
+    .card:hover .card-img-top {
+      transform: scale(1.05); /* Apply a slight zoom-out on hover */
+    }
+</style>
+{% endblock extra_style %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <!--sidebar navigation menu-->
+    {% include 'core/profile-nav-menu.html' %}
+
+    <!-- Result Section (Left-hand side) -->
+    <div class="col-lg-9 col-12">
+        <!-- Result content goes here -->
+
+        <div class="container mt-4">
+            <div class="row">
+              {% for post in user_posts %}
+              <!-- Repeat this col for each image post -->
+              <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card"> 
+                  <a href="{% url 'view_post' id=post.id %}"><img src="{{ post.image.url }}" class="card-img-top img-fluid" alt="Design Image 1"></a>
+                  <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.description }}</p>
+                    <a href="{% url 'delete_post' id=post.id %}">
+                      <button class="btn btn-primary like-button" data-post-id="{{ post.id }}" data-csrf-token="{{ csrf_token }}">
+                          <i class="fas fa-trash-alt"></i>
+                      </button>
+                    </a>
+                    <a href="{% url 'update_post' id=post.id %}">
+                      <button class="btn btn-primary like-button" data-post-id="{{ post.id }}" data-csrf-token="{{ csrf_token }}">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              <!-- End of col for each image post -->
+            </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Add MDBootstrap JS link here -->
+<script src="https://cdn.jsdelivr.net/npm/mdb@5.1.0/js/mdb.min.js"></script>
+{% endblock %}

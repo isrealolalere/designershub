@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-3&5$m&-+w6i_1xi7!=*^%l(f)_kwx+1-c408kq7&0dm9x=5_zq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app']
 
 
 # Application definition
@@ -149,7 +149,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'designers_hub/static/')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-LOGIN_URL = ''
+LOGIN_URL = '/designers-hub/login/'
 
 
 # Email Configuration
